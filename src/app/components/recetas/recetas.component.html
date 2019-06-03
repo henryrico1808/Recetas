@@ -1,0 +1,59 @@
+<div *ngIf="recetas.length > 0; else norecetas">
+  <ul class="list-group">
+    <li *ngFor="let p of recetas" class="list-group-item list-group-item-action">
+      <h3>{{p.name}}</h3>
+      <h5>Cooking Time: {{p.price}} min</h5>
+      <p>{{p.description}}</p>
+      
+      <div id="acordion">
+          <div class="card">
+
+            <div class="car-header">
+              <a href="#uno" class="card-link" data-toggle="collapse" data-parent="#acordion">...</a>
+            </div>
+
+            <div id="uno" class="collapse">
+              <div class="card-body">
+                  <button (click)= "deleteReceta($event , p)" class="btn btn-danger">
+                      Delete
+                    </button>
+                    <button (click) = "editReceta($event , p)"  class="btn btn-secondary">
+                      Edit
+                  </button>
+              </div>
+            </div>
+      
+          </div>
+      </div>
+      <!-- <button (click)= "deleteReceta($event , p)" class="btn btn-danger">
+          Delete
+        </button>
+        <button (click) = "editReceta($event , p)"  class="btn btn-secondary">
+          Edit
+      </button> -->
+      
+      <div *ngIf="editing && editingReceta.id == p.id">
+          <form (ngSubmit)="updateReceta()">
+            <div class="form-group mt-3" >
+                <input type="text" name="name" [(ngModel)]="editingReceta.name" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="description" [(ngModel)]="editingReceta.description" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="number" name="price" [(ngModel)]="editingReceta.price" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success btn-block">
+              Update
+            </button>
+          </form>
+      </div>
+
+    </li>
+  
+  </ul>
+</div>
+
+<ng-template ·norecetas>
+  <p>There are no recetas yet. </p>
+</ng-template>
